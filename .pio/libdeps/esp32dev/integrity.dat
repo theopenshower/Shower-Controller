@@ -1,0 +1,4 @@
+bodmer/TFT_eSPI@^2.5.2
+adafruit/Adafruit NeoPixel@^1.11.0
+milesburton/DallasTemperature@^3.11.0
+electromagus/ESPMX1508@^1.0.5
