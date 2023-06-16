@@ -9,7 +9,6 @@
 
 /* Free Ports Left side
 25
-32
 */
 
 #define PINA 12
@@ -20,7 +19,7 @@
 #define PWMSound 22
 #define RelayHeatElement 26
 #define NeopixelOut 27        // On Trinket or Gemma, suggest changing this to 1
-#define ReadTemperature 33
+#define ReadTemperature 32
 #define ReadMainPower 34
 #define ReadBatteryPower 35
 #define NUMPIXELS 8
