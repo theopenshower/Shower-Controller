@@ -7,8 +7,8 @@
 #include <Adafruit_NeoPixel.h>
 #include <ESP32MX1508.h>
 
-/* Free Ports Left side
-25
+/* Other used Ports
+Check screen ports .\Shower-Controller\.pio\libdeps\esp32dev\TFT_eSPI\User_Setups\Setup46_GC9A01_ESP32.h
 */
 
 #define PINA 12
@@ -17,9 +17,11 @@
 #define CH2 1                  // Make sure each pin is a different channel and not in use by other PWM devices (servos, LED's, etc)
 
 #define PWMSound 22
-#define RelayHeatElement 26
+#define LightPowerCap 26      //Transistor
+#define RelayHeatElement 26   //Transistor 
 #define NeopixelOut 27        // On Trinket or Gemma, suggest changing this to 1
 #define ReadTemperature 32
+#define ShutDownBattery 33    //Transistor Battery OFF 
 #define ReadMainPower 34
 #define ReadBatteryPower 35
 #define NUMPIXELS 8
@@ -66,6 +68,7 @@ void setup()
   Serial.begin(9600);
 
   pinMode(RelayHeatElement, OUTPUT);
+  pinMode(ShutDownBattery, OUTPUT);
   pixels.begin();
   int colors [3] = {255,250,205}; //lemonchiffon
   PixelsLight(colors); 
@@ -161,6 +164,11 @@ void loop()
     tft.drawString("Target Temp", 10, 140);
     tft.drawFloat(desiredTemperature, 2, 80, 170);
     TemperatureMainPower(temperatureCelsius);
+    if(analogRead(ReadBatteryPower) > 800){
+      digitalWrite(ShutDownBattery, HIGH); // OFF battery sending > 1 Volt
+    } else {
+      digitalWrite(ShutDownBattery, LOW); //  Reset Transistor OFF
+    }
   }
   else if (analogRead(ReadBatteryPower) > 800)
   {
